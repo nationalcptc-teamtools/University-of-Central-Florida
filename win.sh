@@ -34,7 +34,7 @@ xxXXXXxXx+;;;;;xxxxXXXX$$$$$$$$$$$$XXXXxxXxx++;;;;;;;;;;;;;+++;+;
 
 # the big install
 sudo DEBIAN_FRONTEND=noninteractive apt update -y -qq > /dev/null 2>&1
-sudo DEBIAN_FRONTEND=noninteractive apt install -y -qq masscan curl terminator git python3-dev faketime apt-transport-https ca-certificates gnupg lsb-release build-essential pkg-config libssl-dev libkrb5-dev libclang-dev clang libgssapi-krb5-2 krb5-user cifs-utils yq > /dev/null 2>&1
+sudo DEBIAN_FRONTEND=noninteractive apt install -y -qq masscan curl terminator git python3-dev faketime apt-transport-https ca-certificates gnupg lsb-release build-essential pkg-config libssl-dev libkrb5-dev libclang-dev clang libgssapi-krb5-2 krb5-user cifs-utils yq golang-go > /dev/null 2>&1
 
 # docker
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
