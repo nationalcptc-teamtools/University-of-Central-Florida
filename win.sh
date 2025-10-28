@@ -60,7 +60,7 @@ uv tool install git+https://github.com/ly4k/Certipy.git -q
 uv tool install git+https://github.com/fortra/impacket.git -q
 uv tool install git+https://github.com/CravateRouge/bloodyAD.git -q
 uv tool install git+https://github.com/dirkjanm/BloodHound.py.git@bloodhound-ce -q
-uv tool install git+https://github.com/adityatelange/evil-winrm-py -q
+uv tool install 'git+https://github.com/adityatelange/evil-winrm-py[kerberos]' -q
 
 # shell
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh) --unattended" >/dev/null 2>&1
