@@ -32,11 +32,10 @@ xxXXXXxXx+;;;;;xxxxXXXX$$$$$$$$$$$$XXXXxxXxx++;;;;;;;;;;;;;+++;+;
        +XXXXX++++xXXXXXXXXXXxxXXXXx+++++++++:xXXX++++;
        +XXXXX++++++++++;::::;+x++++++++++:::;XXX+++++;'
 
-# the big install
 sudo DEBIAN_FRONTEND=noninteractive apt update -y -qq > /dev/null 2>&1
-sudo DEBIAN_FRONTEND=noninteractive apt install -y -qq masscan curl terminator git python3-dev faketime apt-transport-https ca-certificates gnupg lsb-release build-essential pkg-config libssl-dev libkrb5-dev libclang-dev clang libgssapi-krb5-2 krb5-user cifs-utils yq golang-go > /dev/null 2>&1
 
-# rustup
+# rustup + deps
+sudo DEBIAN_FRONTEND=noninteractive apt install -y -qq curl git python3-dev build-essential apt-transport-https pkg-config libssl-dev > /dev/null 2>&1
 curl https://sh.rustup.rs -sSf | sh -s -- -y > /dev/null 2>&1
 source "$HOME/.cargo/env"
 
@@ -49,11 +48,8 @@ uv tool install git+https://github.com/ly4k/Certipy.git -q
 uv tool install git+https://github.com/fortra/impacket.git -q
 uv tool install git+https://github.com/CravateRouge/bloodyAD.git -q
 uv tool install git+https://github.com/dirkjanm/BloodHound.py.git@bloodhound-ce -q
+sudo DEBIAN_FRONTEND=noninteractive apt install -y -qq libgssapi-krb5-2 libkrb5-dev krb5-user cifs-utils > /dev/null 2>&1
 uv tool install 'git+https://github.com/adityatelange/evil-winrm-py[kerberos]' -q
-
-# rusthound
-cargo install --quiet rusthound-ce
-echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.zshrc
 
 # rockyou
 curl -sSLo ~/rockyou.txt https://github.com/brannondorsey/naive-hashcat/releases/download/data/rockyou.txt
@@ -65,8 +61,10 @@ git clone -q https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUST
 git clone -q https://github.com/zdharma-continuum/fast-syntax-highlighting ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
 sed -i 's/^plugins=(git)$/plugins=(git zsh-syntax-highlighting zsh-autosuggestions fast-syntax-highlighting)/' ~/.zshrc
 sed -i 's/robbyrussell/minimal/g' ~/.zshrc
+sudo DEBIAN_FRONTEND=noninteractive apt install -y -qq terminator faketime ca-certificates lsb-release yq > /dev/null 2>&1
 
 # docker
+sudo DEBIAN_FRONTEND=noninteractive apt install -y -qq gnupg > /dev/null 2>&1
 curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian bullseye stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 sudo DEBIAN_FRONTEND=noninteractive apt update -y -qq > /dev/null 2>&1
@@ -90,7 +88,12 @@ until curl -s -f http://localhost:8888 >/dev/null 2>&1; do
     sleep 2
 done
 echo " Ready!"
-
 '
 sg docker -c 'echo $(docker logs $(docker ps -qf "ancestor=specterops/bloodhound:latest") | grep -i "initial password") | cut -d# -f2'
+
+# rusthound
+sudo DEBIAN_FRONTEND=noninteractive apt install -y -qq libclang-dev clang > /dev/null 2>&1
+cargo install --quiet rusthound-ce
+echo 'export PATH="$HOME/.cargo/bin:$PATH"' >> ~/.zshrc
+
 source ~/.zshrc
